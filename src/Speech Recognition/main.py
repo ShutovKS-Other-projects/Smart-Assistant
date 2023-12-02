@@ -19,8 +19,10 @@ def transcribe_audio():
         # Передаем файл в модель распознавания голоса
         transcriptions = model.transcribe([audio_path])
 
+        text = transcriptions[0]['transcription']
+
         # Возвращаем результат в ответ
-        return jsonify({'status': 'success', 'transcriptions': transcriptions})
+        return jsonify({'status': 'success', 'transcriptions': text})
 
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
