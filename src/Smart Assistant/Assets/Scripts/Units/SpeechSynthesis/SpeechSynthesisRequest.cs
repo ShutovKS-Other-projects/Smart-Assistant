@@ -9,38 +9,35 @@ namespace Units.SpeechSynthesis
     {
         private const string SERVER_URL = "http://127.0.0.1:5001/text_to_speech";
 
-        public static AudioClip SendTextToSpeechRequest(string text, string language = "ru", int rate = 150, float volume = 1.0f)
-        {
-            return SendTextToSpeechRequestAsync(text, language, rate, volume).Result;
-        }
-
-        public static async Task<AudioClip> SendTextToSpeechRequestAsync(string text, string language = "ru", int rate = 150, float volume = 1.0f)
+        public static async Task<AudioClip> SendTextToSpeechRequestAsync(string text, string language = "ru",
+            int rate = 150, float volume = 1.0f)
         {
             var form = new WWWForm();
             form.AddField("text", text);
             form.AddField("language", language);
             form.AddField("rate", rate.ToString());
             form.AddField("volume", volume.ToString());
-            
+
             var www = UnityWebRequest.Post(SERVER_URL, form);
             await www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.Success)
             {
                 var jsonResponse = www.downloadHandler.text;
-                var responseJson = JsonUtility.FromJson<Response>(jsonResponse);
-                var audioPath = responseJson.audio_path;
+                var response = JsonUtility.FromJson<Response>(jsonResponse);
 
-                return await GetAudioAsync(audioPath);
+                if (response.status == "success")
+                {
+                    var audioPath = response.audio_path;
+                    return await GetAudioAsync(audioPath);
+                }
+
+                Debug.LogError("Error: " + response.message);
+                return null;
             }
 
             Debug.LogError("Request failed. Error: " + www.error);
             return null;
-        }
-
-        private static AudioClip GetAudio(string audioPath)
-        {
-            return GetAudioAsync(audioPath).Result;
         }
 
         private static async Task<AudioClip> GetAudioAsync(string audioPath)
@@ -61,11 +58,12 @@ namespace Units.SpeechSynthesis
             return null;
         }
 
-
+        [System.Serializable]
         public struct Response
         {
             public string status;
             public string audio_path;
+            public string message;
         }
     }
 }

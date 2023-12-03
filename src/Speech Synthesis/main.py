@@ -23,7 +23,7 @@ def text_to_speech(text, language='ru', rate=150, volume=1.0):
     # Сохраняем аудиофайл
     engine.save_to_file(text, temp_audio_file_path)
 
-    # Произносим текст
+    # Запускаем процесс генерации аудио
     engine.runAndWait()
 
     return temp_audio_file_path
