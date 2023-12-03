@@ -1,0 +1,4 @@
+torch~=2.1.1
+emoji~=2.8.0
+flask~=3.0.0
+transformers~=4.35.2
