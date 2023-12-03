@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 model = SpeechRecognitionModel("jonatasgrosman/wav2vec2-large-xlsr-53-russian")
 
-
 @app.route('/transcribe_audio', methods=['POST'])
 def transcribe_audio():
     try:

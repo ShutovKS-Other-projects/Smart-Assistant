@@ -10,34 +10,7 @@ namespace Units.VoiceRecognition
     {
         private const string SERVER_URL = "http://127.0.0.1:5000/transcribe_audio";
 
-        public static Response SendVoiceRequest(string filePath)
-        {
-            var form = new WWWForm();
-            var audioData = File.ReadAllBytes(filePath);
-
-            form.AddBinaryData("audio", audioData, "audio.mp3", "audio/mp3");
-
-            var www = UnityWebRequest.Post(SERVER_URL, form);
-            www.SendWebRequest();
-
-            while (!www.isDone)
-            {
-                Thread.Sleep(100);
-            }
-            
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                var jsonResponse = www.downloadHandler.text;
-                
-                return JsonUtility.FromJson<Response>(jsonResponse);
-            }
-
-            Debug.LogError("Request failed. Error: " + www.error);
-            return default;
-        }
-
-
-        public static async Task<Response> SendVoiceRequestAsync(string filePath)
+        public static async Task<string> SendVoiceRequestAsync(string filePath)
         {
             var form = new WWWForm();
             var audioData = File.ReadAllBytes(filePath);
@@ -50,18 +23,28 @@ namespace Units.VoiceRecognition
             if (www.result == UnityWebRequest.Result.Success)
             {
                 var jsonResponse = www.downloadHandler.text;
+                var response = JsonUtility.FromJson<Response>(jsonResponse);
                 
-                return JsonUtility.FromJson<Response>(jsonResponse);
+                if (response.status == "success")
+                {
+                    var transcriptions = response.transcriptions;
+                    return transcriptions;
+                }
+                
+                Debug.LogError("Error: " + response.message);
+                return null;
             }
 
             Debug.LogError("Request failed. Error: " + www.error);
-            return default;
+            return null;
         }
         
+        [System.Serializable]
         public struct Response
         {
             public string status;
             public string transcriptions;
+            public string message;
         }
     }
 }
