@@ -1,16 +1,15 @@
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Units.VoiceRecognition
+namespace Services.VoiceRecognition
 {
-    public static class VoiceRecognitionRequest
+    public class VoiceRecognitionRequest : IVoiceRecognitionService
     {
         private const string SERVER_URL = "http://127.0.0.1:5000/transcribe_audio";
 
-        public static async Task<string> SendVoiceRequestAsync(string filePath)
+        public async Task<string> SendVoiceRequestAsync(string filePath)
         {
             var form = new WWWForm();
             var audioData = File.ReadAllBytes(filePath);

@@ -1,15 +1,14 @@
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Units.SpeechSynthesis
+namespace Services.SpeechSynthesis
 {
-    public static class SpeechSynthesisRequest
+    public class SpeechSynthesisRequest : ISpeechSynthesisService
     {
         private const string SERVER_URL = "http://127.0.0.1:5001/text_to_speech";
 
-        public static async Task<AudioClip> SendTextToSpeechRequestAsync(string text, string language = "ru",
+        public async Task<AudioClip> SendTextToSpeechRequestAsync(string text, string language = "ru",
             int rate = 150, float volume = 1.0f)
         {
             var form = new WWWForm();

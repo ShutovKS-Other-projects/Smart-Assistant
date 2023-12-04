@@ -2,13 +2,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Units.Conversational
+namespace Services.Conversational
 {
-    public class ConversationalRequest
+    public class ConversationalRequest : IConversationalService
     {
         private const string SERVER_URL = "http://127.0.0.1:5002/generate_response";
 
-        public static async Task<string> GenerateResponseAsync(string userInput)
+        public async Task<string> GenerateResponseAsync(string userInput)
         {
             var form = new WWWForm();
             form.AddField("user_input", "@@ПЕРВЫЙ@@" + userInput + "@@ВТОРОЙ@@");
