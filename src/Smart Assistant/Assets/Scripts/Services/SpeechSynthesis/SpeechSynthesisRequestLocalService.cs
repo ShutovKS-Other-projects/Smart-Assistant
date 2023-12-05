@@ -1,10 +1,15 @@
+#region
+
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#endregion
+
 namespace Services.SpeechSynthesis
 {
-    public class SpeechSynthesisRequest : ISpeechSynthesisService
+    public class SpeechSynthesisRequestLocalService : ISpeechSynthesisService
     {
         private const string SERVER_URL = "http://127.0.0.1:5001/text_to_speech";
 
@@ -41,7 +46,6 @@ namespace Services.SpeechSynthesis
 
         private static async Task<AudioClip> GetAudioAsync(string audioPath)
         {
-            Debug.Log("Audio path: " + audioPath);
             var audioRequest = UnityWebRequestMultimedia.GetAudioClip(audioPath, AudioType.WAV);
             audioRequest.SetRequestHeader("Accept", "audio/*");
 
@@ -57,7 +61,7 @@ namespace Services.SpeechSynthesis
             return null;
         }
 
-        [System.Serializable]
+        [Serializable]
         public struct Response
         {
             public string status;

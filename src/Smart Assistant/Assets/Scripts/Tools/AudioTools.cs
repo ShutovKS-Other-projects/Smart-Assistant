@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.IO;
 using UnityEngine;
+
+#endregion
 
 namespace Tools
 {
@@ -44,7 +48,7 @@ namespace Tools
             return wav;
         }
 
-        public static void SaveAudioClipToFile(this AudioClip clip, string path, string fileName)
+        public static void SaveAudioClipToFile(this AudioClip clip, string path)
         {
             if (clip != null)
             {
@@ -52,7 +56,7 @@ namespace Tools
 
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-                File.WriteAllBytes(path + fileName + ".wav", byteArray);
+                File.WriteAllBytes(Path.Combine(path), byteArray);
             }
             else
             {

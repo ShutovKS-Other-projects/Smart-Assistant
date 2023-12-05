@@ -1,10 +1,15 @@
+#region
+
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#endregion
+
 namespace Services.Conversational
 {
-    public class ConversationalRequest : IConversationalService
+    public class ConversationalRequestLocalService : IConversationalService
     {
         private const string SERVER_URL = "http://127.0.0.1:5002/generate_response";
 
@@ -35,7 +40,7 @@ namespace Services.Conversational
             return null;
         }
 
-        [System.Serializable]
+        [Serializable]
         public class ResponseData
         {
             public string status;

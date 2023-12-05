@@ -1,11 +1,16 @@
+#region
+
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#endregion
+
 namespace Services.VoiceRecognition
 {
-    public class VoiceRecognitionRequest : IVoiceRecognitionService
+    public class VoiceRecognitionRequestLocalService : IVoiceRecognitionService
     {
         private const string SERVER_URL = "http://127.0.0.1:5000/transcribe_audio";
 
@@ -23,13 +28,13 @@ namespace Services.VoiceRecognition
             {
                 var jsonResponse = www.downloadHandler.text;
                 var response = JsonUtility.FromJson<Response>(jsonResponse);
-                
+
                 if (response.status == "success")
                 {
                     var transcriptions = response.transcriptions;
                     return transcriptions;
                 }
-                
+
                 Debug.LogError("Error: " + response.message);
                 return null;
             }
@@ -37,8 +42,8 @@ namespace Services.VoiceRecognition
             Debug.LogError("Request failed. Error: " + www.error);
             return null;
         }
-        
-        [System.Serializable]
+
+        [Serializable]
         public struct Response
         {
             public string status;

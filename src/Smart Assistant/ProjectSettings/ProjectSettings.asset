@@ -830,8 +830,8 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Smart Assistant
-  metroPackageVersion: 
+  metroPackageName: SmartAssistant
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -839,7 +839,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Smart Assistant
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Smart Assistant
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

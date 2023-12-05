@@ -9,7 +9,6 @@ app = Flask(__name__)
 tokenizer = AutoTokenizer.from_pretrained('tinkoff-ai/ruDialoGPT-medium')
 model = AutoModelWithLMHead.from_pretrained('tinkoff-ai/ruDialoGPT-medium')
 
-
 def extract_messages(input_string):
     messages = []
 
